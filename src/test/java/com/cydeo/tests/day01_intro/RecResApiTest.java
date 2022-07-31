@@ -1,6 +1,11 @@
 package com.cydeo.tests.day01_intro;
 
+import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * When User sends GET Request to
@@ -13,8 +18,24 @@ import org.junit.jupiter.api.Test;
 
 public class RecResApiTest {
 
+    String url = "https://reqres.in/api/users";
+
+    @DisplayName("GET all users")
     @Test
     public void usersGetTest() {
+        //When User sends GET Request
+      Response response = when().get(url);
+      //Response response = RestAssured.get(url); both same. first one more readable
+
+      //Then Response status code should be 200
+      System.out.println("status code = " + response.statusCode());
+      assertEquals(200, response.statusCode());
+
+      //BDD syntax
+      response.then().statusCode(200);
+      response.then().assertThat().statusCode(200);
+
+
 
     }
 
