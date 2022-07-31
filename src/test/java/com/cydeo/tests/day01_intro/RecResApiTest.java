@@ -35,7 +35,22 @@ public class RecResApiTest {
       response.then().statusCode(200);
       response.then().assertThat().statusCode(200);
 
+      //And Response body should contain "George"
+      System.out.println("Response json body = " + response.asString());
+      assertTrue(response.asString().contains("George"));
 
+      //And Header Content type should be application/json
+        System.out.println("Content type header value = " + response.contentType());
+        assertTrue(response.contentType().contains("application/json"));
+    }
+
+//    When User Sends get request to API Endpoint:
+//            "https://reqres.in/api/users/5"
+//    Then Response status code should be 200
+//    And Response body should contain user info "Charles"
+
+    @Test
+    public void getSingleUserApiTest() {
 
     }
 
