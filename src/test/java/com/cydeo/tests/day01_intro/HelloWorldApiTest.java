@@ -29,8 +29,15 @@ public class HelloWorldApiTest {
         System.out.println("Status code = " + response.statusCode());
         System.out.println("Status line = " + response.statusLine());
 
+        //assert that status code is 200
+        Assertions.assertEquals(200, response.statusCode());
 
+        //declare statusCode variable and assign the response status code then assert
+        int statusCode = response.statusCode();
+        Assertions.assertEquals(200 , statusCode);
 
+        //And "Hello World!" message should be in the response body
+        Assertions.assertTrue(response.asString().contains("Hello World!"));
     }
 
 }
