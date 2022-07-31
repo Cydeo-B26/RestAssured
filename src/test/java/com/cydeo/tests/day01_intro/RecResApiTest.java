@@ -49,8 +49,35 @@ public class RecResApiTest {
 //    Then Response status code should be 200
 //    And Response body should contain user info "Charles"
 
+    @DisplayName("GET single user")
     @Test
     public void getSingleUserApiTest() {
+       Response response = when().get(url + "/5");
+
+        System.out.println("status code = " + response.statusCode());
+        assertEquals(200 , response.statusCode());
+
+        //And Response body should contain user info "Charles"
+        response.prettyPrint();
+        assertTrue(response.asString().contains("Charles"));
+    }
+
+
+//    When Send get request to API Endpoint:
+//            "https://reqres.in/api/users/50"
+//    Then Response status code should be 404
+//    And Response body should contain "{}"
+
+    @DisplayName("GET request to non existing user")
+    @Test
+    public void getSingleUserNegativeApiTest() {
+        Response response = when().get(url + "/50");
+
+        System.out.println("Status code = " + response.statusCode());
+        assertEquals(404, response.statusCode());
+
+        System.out.println("Json body = " + response.asString());
+        assertEquals("{}" , response.asString());
 
     }
 
