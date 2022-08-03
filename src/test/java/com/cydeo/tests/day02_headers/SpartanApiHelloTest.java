@@ -38,6 +38,7 @@ public class SpartanApiHelloTest {
      When I send GET request to http://3.93.242.50:8000/api/hello
      Then status code should be 200
      And content type is "text/plain;charset=UTF-8"
+     BDD -> given, when, then, and keywords. making readable
      */
 
     @DisplayName("GET api/hello - bdd")
@@ -47,6 +48,5 @@ public class SpartanApiHelloTest {
         .then().assertThat().statusCode(200)
         .and().contentType("text/plain;charset=UTF-8");
     }
-
 
 }
