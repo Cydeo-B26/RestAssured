@@ -26,16 +26,23 @@ public class SpartanApiWithParamsTest {
     public void getSingleSpartan() {
         int id = 5;
         given().accept(ContentType.JSON)
-                .when().get(url+"/" + id);
+                .when().get(url+"/" + id); //id value is concatenated to url
 
        Response response = given().accept(ContentType.JSON)
-                .and().pathParam("id", id)
+                .and().pathParam("id", id) //id value is passed using pathParam method
                 .when().get(url+"/{id}");
 
        response.prettyPrint();
         System.out.println("status code = " + response.statusCode());
         assertEquals(200, response.statusCode());
+        //HttpStatus.SC_OK = 200
         assertEquals(HttpStatus.SC_OK, response.statusCode());
+
+        System.out.println("content type = " + response.contentType());
+        System.out.println("content type = " + response.getHeader("content-type"));
+
+        assertEquals("application/json",  response.contentType());
+
     }
 }
 
