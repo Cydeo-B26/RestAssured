@@ -43,6 +43,7 @@ public class SpartanApiWithParamsTest {
 
         assertEquals("application/json",  response.contentType());
 
+        assertTrue(response.asString().contains("Blythe"));
     }
 }
 
