@@ -1,7 +1,7 @@
 package com.cydeo.tests.day03_parameters;
 
 import io.restassured.http.ContentType;
-import io.restassured.http.Headers;
+
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
@@ -77,7 +77,6 @@ public class SpartanApiWithParamsTest {
     }
 
 }
-
 
 
 
