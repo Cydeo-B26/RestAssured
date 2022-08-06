@@ -65,21 +65,27 @@ public class HRApiGetTest {
         assertTrue(response.asString().contains("Europe") , "Europe is not in json body");
     }
 
-
-
+    /**
+     * Given accept type is json
+     * And query param q={"region_name": "Americas"}
+     * When user send get request to /ords/hr/regions
+     * Status code should be 200
+     * Content type should be "application/json"
+     * And region name should be "Americas"
+     * And region id should be "2"
+     */
+    @DisplayName("GET /regions?q={\"region_name\": \"Americas\"}")
+    @Test
+    public void getRegionWithQueryParamTest() {
+        Response response = given().log().all()
+                .and().queryParam("q" , "{\"region_name\": \"Americas\"}")
+                .and().accept(ContentType.JSON)
+                .when().get("/regions");
+        response.prettyPrint();
+        assertEquals(HttpStatus.SC_OK, response.statusCode());
+        assertEquals("application/json",response.contentType());
+        assertTrue(response.asString().contains("Americas") , "Americas is not in json body");
+        assertTrue(response.asString().contains("2") , "region id is incorrect");
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
