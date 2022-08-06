@@ -25,7 +25,7 @@ public class SpartanPathMethodTest extends SpartanTestBase {
  * And gender is "Female"
  * And phone is "7842554879"
  */
-    @DisplayName("GET /spartan/{id} and path()")
+    @DisplayName("GET /spartans/{id} and path()")
     @Test
     public void readSpartanJsonUsingPathTest() {
        Response response = given().accept(ContentType.JSON)
@@ -54,6 +54,27 @@ public class SpartanPathMethodTest extends SpartanTestBase {
         assertEquals("Female",  response.path("gender"));
         assertEquals(7842554879L, (long)response.path("phone"));
         //assertEquals(7842554879L, Long.valueOf(""+response.path("phone"))); tricky
+
+    }
+
+    /**
+     Given accept is json
+     When I send get request to /api/spartans
+     Then status code is 200
+     And content type is json
+     And I can navigate json array object
+     */
+    @DisplayName("GET /spartans and path()")
+    @Test
+    public void readSpartanJsonArrayUsingPathTest() {
+        Response response = given().accept(ContentType.JSON)
+                .when().get("/spartans");
+        assertEquals(200, response.statusCode());
+        assertEquals("application/json", response.contentType());
+
+        System.out.println("first spartan id = " + response.path("id[0]"));
+        System.out.println("first person name = " + response.path("name[0]"));
+        System.out.println("first person name = " + response.path("[0].name"));
 
     }
 
