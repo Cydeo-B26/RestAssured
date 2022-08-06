@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,11 +73,43 @@ public class SpartanPathMethodTest extends SpartanTestBase {
                 .when().get("/spartans");
         assertEquals(200, response.statusCode());
         assertEquals("application/json", response.contentType());
-
+/**
+ * [
+ *     {
+ *         "id": 107,
+ *         "name": "Ezio Auditore",
+ *         "gender": "Male",
+ *         "phone": 7224120202
+ *     },
+ *     {
+ *         "id": 4,
+ *         "name": "David",
+ *         "gender": "Female",
+ *         "phone": 3786741487
+ *     }
+ *     ]
+ */
+        //Print first spartan id and name
         System.out.println("first spartan id = " + response.path("id[0]"));
         System.out.println("first person name = " + response.path("name[0]"));
         System.out.println("first person name = " + response.path("[0].name"));
 
+        //print last spartan id and name. -1 index points to last item
+        System.out.println("last spartan id = " + response.path("id[-1]"));
+        System.out.println("last person name = " + response.path("name[-1]"));
+
+        //get all ids into a List
+       List<Integer> allIds = response.path("id");
+        System.out.println("allIds size = " + allIds.size());
+        System.out.println("allIds = " + allIds);
+        assertTrue(allIds.contains(22) && allIds.size() == 100);
+
+        //get all names and say hi
+        List<String> names = response.path("name");
+        names.forEach(name -> System.out.println("Hi " + name));
+        for(String name : names) {
+            System.out.println("Bye " + name);
+        }
     }
 
 }
