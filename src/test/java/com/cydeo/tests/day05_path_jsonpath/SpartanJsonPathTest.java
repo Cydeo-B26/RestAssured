@@ -61,6 +61,9 @@ public class SpartanJsonPathTest extends SpartanTestBase {
         assertEquals("Female", jsonPath.getString("gender"));
         assertEquals(7842554879L, jsonPath.getLong("phone"));
     }
+
+
+
 }
 
 
