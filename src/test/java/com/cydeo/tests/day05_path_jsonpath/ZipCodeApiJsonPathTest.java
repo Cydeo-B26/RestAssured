@@ -29,8 +29,13 @@ public class ZipCodeApiJsonPathTest {
         baseURI = ConfigurationReader.getProperty("zipcode.api.url");
     }
 
+    @DisplayName("GET us/zipCode - jsonPath")
     @Test
     public void zipCodeJsonPathTest() {
+       Response response = given().accept(ContentType.JSON)
+                .and().pathParam("country","us")
+                .and().pathParam("postal-code", "22102")
+                .when().get("/{country}/{postal-code}");
 
     }
 
