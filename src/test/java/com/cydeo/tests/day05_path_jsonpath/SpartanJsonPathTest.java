@@ -55,6 +55,11 @@ public class SpartanJsonPathTest extends SpartanTestBase {
         System.out.println("name = " + jsonPath.getString("name"));
         System.out.println("gender = "+ jsonPath.getString("gender"));
         System.out.println("phone = " + jsonPath.getLong("phone"));
+
+        assertEquals(13, jsonPath.getInt("id"));
+        assertEquals("Jaimie", jsonPath.getString("name"));
+        assertEquals("Female", jsonPath.getString("gender"));
+        assertEquals(7842554879L, jsonPath.getLong("phone"));
     }
 }
 
