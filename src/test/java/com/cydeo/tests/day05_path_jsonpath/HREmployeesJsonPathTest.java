@@ -50,6 +50,24 @@ public class HREmployeesJsonPathTest extends HRApiTestBase {
         System.out.println("namesAtDept90 = " + namesAtDept90);
         System.out.println("namesAtDept90.size() = " + namesAtDept90.size());
 
+        //get all employee first names who work as IT_PROG
+        List<String> itProgs = jsonPath.getList("items.findAll{it.job_id=='IT_PROG'}.first_name");
+        System.out.println("itProgs = " + itProgs);
+
+        //get all employee first names whose salary is more than or equal 5000
+        List<String> salaryMore5000 = jsonPath.getList("items.findAll{it.salary >= 5000}.first_name");
+        System.out.println("salaryMore5000 = " + salaryMore5000);
+
+        //get emp first name who has max salary
+        String firstName = jsonPath.getString("items.max{it.salary}.first_name");
+        System.out.println("firstName max salary = " + firstName);
+
+        //get emp first name who has min salary
+        String minSalaryEmp = jsonPath.getString("items.min{it.salary}");
+        System.out.println("minSalaryEmp = " + minSalaryEmp);
+
+        String minSalaryEmpFName = jsonPath.getString("items.min{it.salary}.first_name");
+        System.out.println("minSalaryEmpFName = " + minSalaryEmpFName);
 
     }
 
