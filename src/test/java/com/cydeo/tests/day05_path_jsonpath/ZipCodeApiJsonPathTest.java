@@ -43,7 +43,7 @@ public class ZipCodeApiJsonPathTest {
 
        //assign response json payload/body to Jsonpath
         JsonPath jsonPath = response.jsonPath();
-
+        verifyZipCode(jsonPath, "22102");
         //navigate the json and print/assert country value
         System.out.println("country name = " + jsonPath.getString("country"));
         assertEquals("United States" , jsonPath.getString("country"));
@@ -52,6 +52,22 @@ public class ZipCodeApiJsonPathTest {
         System.out.println("post code = " + jsonPath.getString("'post code'"));
         String zipCode = jsonPath.getString("'post code'");
         assertEquals("22102", zipCode);
+
+        //verify place name
+        System.out.println("place name = " + jsonPath.getString("places[0].'place name'"));
+        assertEquals("Mc Lean" , jsonPath.getString("places[0].'place name'"));
+        
+        //verify state is "Virginia"
+        String state = jsonPath.getString("places[0].state");
+        System.out.println("state = " + state);
+        assertEquals("Virginia", state);
+
+
+
+    }
+
+    public void verifyZipCode(JsonPath jsonPath, String expZipCode) {
+        assertEquals(expZipCode, jsonPath.getString("'post code'"));
     }
 
 }
