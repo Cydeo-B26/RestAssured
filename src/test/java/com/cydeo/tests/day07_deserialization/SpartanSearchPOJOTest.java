@@ -54,8 +54,25 @@ public class SpartanSearchPOJOTest extends SpartanTestBase {
         System.out.println("All spartans = " + spartanSearch.getContent());
         System.out.println("First spartan info = " + spartanSearch.getContent().get(0));
 
+        //goto to content list of spartans and get index 1 single spartan
+        Spartan secondSpartan = spartanSearch.getContent().get(1);
+        System.out.println("secondSpartan = " + secondSpartan);
+        System.out.println("second spartan name = " + secondSpartan.getName());
+        System.out.println("second spartan id = " + secondSpartan.getId());
 
+        List<Spartan> spartanData = spartanSearch.getContent();
+        System.out.println("second spartan = " + spartanData.get(1));
+        
+        //read all names into a list
+        List<String> names = new ArrayList<>();
+        for (Spartan sp : spartanData) {
+            names.add(sp.getName());
+        }
 
+        System.out.println("names = " + names);
+        //using functional programming. stream
+        List<String> allNames = spartanData.stream().map(sp -> sp.getName()).collect(Collectors.toList());
+        System.out.println("allNames = " + allNames);
     }
 
 }
