@@ -2,6 +2,7 @@ package com.cydeo.tests.day07_deserialization;
 
 
 import com.cydeo.pojo.Spartan;
+import com.cydeo.pojo.SpartanSearch;
 import com.cydeo.utils.SpartanTestBase;
 import io.restassured.http.ContentType;
 
@@ -41,9 +42,24 @@ public class SpartanSearchPOJOTest extends SpartanTestBase {
                 .and().queryParams(queryMap)
                 .when().get("/spartans/search");
         response.prettyPrint();
+
+        assertEquals(HttpStatus.SC_OK, response.statusCode());
+        assertEquals(ContentType.JSON.toString(), response.contentType());
+
+        //deserialize json to SpartanSearch pojo class
+        SpartanSearch spartanSearch = response.body().as(SpartanSearch.class);
+
+        //total elements
+        System.out.println("total Element = " + spartanSearch.getTotalElement());
+        System.out.println("All spartans = " + spartanSearch.getContent());
+        System.out.println("First spartan info = " + spartanSearch.getContent().get(0));
+
+
+
     }
 
 }
+
 
 
 
