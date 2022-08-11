@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +29,30 @@ public class AllSpartansPOJOTest extends SpartanTestBase {
      */
     @Test
     public void allSpartansToPojoTest() {
+       Response response = given().accept(ContentType.JSON)
+                .when().get("/spartans");
+       assertEquals(200, response.statusCode());
+       assertEquals("application/json", response.contentType());
+
+       //convert response to jsonpath
+        JsonPath jsonPath = response.jsonPath();
+
+        //using jsonPath extract List of spartans/ do deserialization
+        List<Spartan> allSpartans = jsonPath.getList("",Spartan.class);
+
+        System.out.println("count = " + allSpartans.size());
+
+        //first spartan
+        System.out.println("first spartan = " + allSpartans.get(0));
+        
+        //using streams: filter and store female spartans into a different list
+        List<Spartan> femaleSpartans = allSpartans.stream()
+                                        .filter(spartan -> spartan.getGender().equals("Female"))
+                                        .collect(Collectors.toList());
+
+        System.out.println("femaleSpartans = " + femaleSpartans);
+        System.out.println("femaleSpartans.size() = " + femaleSpartans.size());
+
 
     }
 
