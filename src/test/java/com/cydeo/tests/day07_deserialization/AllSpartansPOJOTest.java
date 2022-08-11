@@ -53,7 +53,23 @@ public class AllSpartansPOJOTest extends SpartanTestBase {
         System.out.println("femaleSpartans = " + femaleSpartans);
         System.out.println("femaleSpartans.size() = " + femaleSpartans.size());
 
+        //using streams: filter and store male spartans into a different list
+        //source.stream.filter(condition in lambda).collect(type)
+        long count = allSpartans.stream().filter(sp -> sp.getGender().equals("Male")).count();
+        System.out.println("male spartan count = " + count);
+        List<Spartan> maleSpartans = allSpartans.stream().filter(sp -> sp.getGender().equals("Male"))
+                .collect(Collectors.toList());
+        System.out.println("maleSpartans = " + maleSpartans);
+
 
     }
 
 }
+
+
+
+
+
+
+
+
