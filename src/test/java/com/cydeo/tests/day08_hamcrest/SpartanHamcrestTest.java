@@ -5,6 +5,8 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -43,6 +45,7 @@ public class SpartanHamcrestTest extends SpartanTestBase {
      When I send get request to /spartans/search
      Then status code is 200
      And content type is Json
+     And header date contains 2022
      And json response data is as expected
         totalElement is 34
         has ids: 94, 98,91, 81
@@ -53,7 +56,17 @@ public class SpartanHamcrestTest extends SpartanTestBase {
     @DisplayName("GET /spartans/search -> hamcrest assertion")
     @Test
     public void searchTest(){
-
+        given().accept(ContentType.JSON)
+                .and().queryParam("nameContains" , "e")
+                .and().queryParam("gender", "Female")
+                .when().get("/spartans/search")
+                .then().statusCode(200)
+                .and().contentType(ContentType.JSON)
+                .and().header("Date", containsString(LocalDate.now().getYear()+""))
+                .and().header("Date", containsString("2022"))
+                .and().body("totalElement", is(equalTo(34)) ,
+                        "content.id", hasItems(94, 98, 91, 81) ,
+                        "content.name", hasItems("Jocelin", "Georgianne", "Catie", "Marylee","Elita"));
     }
 
 }
