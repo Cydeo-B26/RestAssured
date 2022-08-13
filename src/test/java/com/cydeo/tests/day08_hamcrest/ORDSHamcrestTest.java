@@ -58,6 +58,7 @@ public class ORDSHamcrestTest extends HRApiTestBase {
                 .and().body("country_name" , equalTo("Argentina"),
                         "country_id" , equalTo("AR"),
                         "region_id", equalTo(2));
+                //.and().extract().jsonPath();
 
     }
 
