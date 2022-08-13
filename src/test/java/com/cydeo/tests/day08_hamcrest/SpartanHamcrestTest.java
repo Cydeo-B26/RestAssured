@@ -66,7 +66,8 @@ public class SpartanHamcrestTest extends SpartanTestBase {
                 .and().header("Date", containsString("2022"))
                 .and().body("totalElement", is(equalTo(34)) ,
                         "content.id", hasItems(94, 98, 91, 81) ,
-                        "content.name", hasItems("Jocelin", "Georgianne", "Catie", "Marylee","Elita"));
+                        "content.name", hasItems("Jocelin", "Georgianne", "Catie", "Marylee","Elita"),
+                        "content.gender", everyItem(is("Female")));
     }
 
 }
