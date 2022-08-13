@@ -36,5 +36,24 @@ public class SpartanHamcrestTest extends SpartanTestBase {
 
     }
 
+    /**
+     Given accept type is json
+     And query param nameContains value is "e"
+     And query param gender value is "Female"
+     When I send get request to /spartans/search
+     Then status code is 200
+     And content type is Json
+     And json response data is as expected
+        totalElement is 34
+        has ids: 94, 98,91, 81
+        has names: Jocelin, Georgianne, Catie, Marylee,Elita
+        every gender is Female
+        every name contains e
+     */
+    @DisplayName("GET /spartans/search -> hamcrest assertion")
+    @Test
+    public void searchTest(){
+
+    }
 
 }
