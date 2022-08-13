@@ -63,5 +63,7 @@ public class HamcrestMatchersIntro {
         //every item
         assertThat(nums, everyItem(greaterThanOrEqualTo(0)));
         assertThat(words, everyItem(not(blankString())));
+
+
     }
 }
