@@ -1,4 +1,7 @@
 package com.cydeo.utils;
+import com.cydeo.pojo.Spartan;
+import com.github.javafaker.Faker;
+
 import static io.restassured.RestAssured.*;
 
 public class SpartanRestUtils {
@@ -11,6 +14,16 @@ public class SpartanRestUtils {
         given().pathParam("id", spartanID)
                 .when().delete(baseUrl +"/spartans/{id}")
                 .then().log().all();
+    }
+
+    public static Spartan getNewSpartan() {
+        Faker random = new Faker();
+        Spartan spartan = new Spartan();
+        spartan.setName(random.name().firstName());
+        spartan.setGender("Female");
+        spartan.setPhone(random.number().numberBetween(1000000000L, 9999999999L));
+
+        return spartan;
     }
 
 }
