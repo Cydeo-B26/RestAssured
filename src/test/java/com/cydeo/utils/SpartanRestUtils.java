@@ -16,19 +16,28 @@ public class SpartanRestUtils {
                 .then().log().all();
     }
 
+    /**
+     * This method creates object of Spartan pojo class
+     * and assigns random data using Faker class
+     * @return
+     */
     public static Spartan getNewSpartan() {
+        //create Faker class object to help us generate random values
         Faker random = new Faker();
-        Spartan spartan = new Spartan();
-        spartan.setName(random.name().firstName());
 
+        Spartan spartan = new Spartan();
+        spartan.setName(random.name().firstName()); //set random firstname
+        //set random gender. 1 - Female otherWise Male
         int num = random.number().numberBetween(1,3);
         if (num == 1) {
             spartan.setGender("Female");
         } else {
             spartan.setGender("Male");
         }
+        //generate random phone num
         spartan.setPhone(random.number().numberBetween(1000000000L, 9999999999L));
 
+        //return spartan object to caller
         return spartan;
     }
 
