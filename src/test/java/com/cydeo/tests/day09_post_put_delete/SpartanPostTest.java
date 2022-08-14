@@ -1,5 +1,6 @@
 package com.cydeo.tests.day09_post_put_delete;
 
+import com.cydeo.pojo.Spartan;
 import com.cydeo.utils.SpartanRestUtils;
 import com.cydeo.utils.SpartanTestBase;
 import io.restassured.path.json.JsonPath;
@@ -86,7 +87,7 @@ public class SpartanPostTest extends SpartanTestBase {
 
         Response response = given().accept(ContentType.JSON)
                 .and().contentType(ContentType.JSON)
-                .and().body(spartanPostMap)  //Map to Json - serialization
+                .and().body(spartanPostMap)  //Map to Json - serialization - Jackson
                 .when().post("/spartans");
 
         response.prettyPrint();
@@ -113,4 +114,44 @@ public class SpartanPostTest extends SpartanTestBase {
 
     }
 
+    @DisplayName("POST /spartans using POJO - SERIALIZATION")
+    @Test
+    public void addNewSpartanAsPOJOTest() {
+        Spartan newSpartan = new Spartan();
+        newSpartan.setGender("Male");
+        newSpartan.setName("TestPost1");
+        newSpartan.setPhone(1234567425L);
+
+        Response response = given().accept(ContentType.JSON)
+                .and().contentType(ContentType.JSON)
+                .and().body(newSpartan)
+                .when().post("/spartans");
+
+        response.prettyPrint();
+        System.out.println("status code = " + response.statusCode());
+        assertThat(response.statusCode(), is(201));
+
+        //verify header
+        assertThat(response.contentType(), is("application/json"));
+
+        //assign response to jsonpath
+        JsonPath jsonPath = response.jsonPath();
+        assertThat(jsonPath.getString("success"), equalTo("A Spartan is Born!"));
+
+        assertThat(jsonPath.getString("data.name"), equalTo(newSpartan.getName()));
+        assertThat(jsonPath.getString("data.gender"), equalTo(newSpartan.getGender()));
+        assertThat(jsonPath.getLong("data.phone"), equalTo(newSpartan.getPhone()));
+
+        //extract the id of newly added spartan
+        int spartanId = jsonPath.getInt("data.id");
+        System.out.println("spartanId = " + spartanId);
+        //delete the spartan after post
+        SpartanRestUtils.deleteSpartanById(spartanId);
+
+
+    }
+
 }
+
+
+
