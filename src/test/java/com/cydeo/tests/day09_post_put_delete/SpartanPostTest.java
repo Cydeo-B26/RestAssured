@@ -40,7 +40,7 @@ public class SpartanPostTest extends SpartanTestBase {
 
         Response response = given().accept(ContentType.JSON)
                 .and().contentType(ContentType.JSON)
-                .and().body(jsonBody)
+                .and().body(jsonBody) //set request body
                 .when().post("/spartans");
 
         response.prettyPrint();
@@ -59,6 +59,7 @@ public class SpartanPostTest extends SpartanTestBase {
         assertThat(jsonPath.getLong("data.phone"), equalTo(1234567425L));
 
         //delete the spartan after post
+        //SpartanRestUtils.deleteSpartanById(192);
     }
 
 }
