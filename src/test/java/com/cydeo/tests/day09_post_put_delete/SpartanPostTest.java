@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -58,6 +61,49 @@ public class SpartanPostTest extends SpartanTestBase {
 
         assertThat(jsonPath.getString("data.gender"), equalTo("Male"));
         assertThat(jsonPath.getLong("data.phone"), equalTo(1234567425L));
+
+        //extract the id of newly added spartan
+        int spartanId = jsonPath.getInt("data.id");
+        System.out.println("spartanId = " + spartanId);
+        //delete the spartan after post
+        SpartanRestUtils.deleteSpartanById(spartanId);
+    }
+
+    /**
+     {
+     "gender": "Male",
+     "name": "TestPost1"
+     "phone": 1234567425
+     }
+     */
+    @DisplayName("POST /spartans using map - SERIALIZATION")
+    @Test
+    public void addNewSpartanAsMapTest() {
+        Map<String, Object> spartanPostMap = new HashMap<>();
+        spartanPostMap.put("gender", "Male");
+        spartanPostMap.put("name", "TestPost1");
+        spartanPostMap.put("phone", 1234567425L);
+
+        Response response = given().accept(ContentType.JSON)
+                .and().contentType(ContentType.JSON)
+                .and().body(spartanPostMap)  //Map to Json - serialization
+                .when().post("/spartans");
+
+        response.prettyPrint();
+        System.out.println("status code = " + response.statusCode());
+        assertThat(response.statusCode(), is(201));
+
+        //verify header
+        assertThat(response.contentType(), is("application/json"));
+
+        //assign response to jsonpath
+        JsonPath jsonPath = response.jsonPath();
+        assertThat(jsonPath.getString("success"), equalTo("A Spartan is Born!"));
+
+        assertThat(jsonPath.getString("data.name"), equalTo(spartanPostMap.get("name")));
+
+        assertThat(jsonPath.getString("data.gender"), equalTo(spartanPostMap.get("gender")));
+        assertThat(jsonPath.getLong("data.phone"), equalTo(spartanPostMap.get("phone")));
 
         //extract the id of newly added spartan
         int spartanId = jsonPath.getInt("data.id");
