@@ -1,5 +1,6 @@
 package com.cydeo.tests.day09_post_put_delete;
 
+import com.cydeo.utils.SpartanRestUtils;
 import com.cydeo.utils.SpartanTestBase;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -58,8 +59,12 @@ public class SpartanPostTest extends SpartanTestBase {
         assertThat(jsonPath.getString("data.gender"), equalTo("Male"));
         assertThat(jsonPath.getLong("data.phone"), equalTo(1234567425L));
 
+        //extract the id of newly added spartan
+        int spartanId = jsonPath.getInt("data.id");
+        System.out.println("spartanId = " + spartanId);
         //delete the spartan after post
-        //SpartanRestUtils.deleteSpartanById(192);
+        SpartanRestUtils.deleteSpartanById(spartanId);
+
     }
 
 }
