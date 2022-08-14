@@ -147,8 +147,6 @@ public class SpartanPostTest extends SpartanTestBase {
         System.out.println("spartanId = " + spartanId);
         //delete the spartan after post
         SpartanRestUtils.deleteSpartanById(spartanId);
-
-
     }
 
 }
