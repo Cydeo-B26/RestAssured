@@ -79,8 +79,24 @@ public class SpartanAPIAndDBValidationTest extends SpartanTestBase {
 
         //database steps
         String query = "SELECT name, gender, phone FROM spartans WHERE spartan_id = " + newSpartanID;
+        
+        String dbUrl = ConfigurationReader.getProperty("spartan.db.url");
+        String dbUser = ConfigurationReader.getProperty("spartan.db.userName");
+        String dbPwd = ConfigurationReader.getProperty("spartan.db.password");
+        
+        //connect to database
+        DBUtils.createConnection(dbUrl, dbUser, dbPwd);
+        //run the query and get result as Map object
+        Map<String, Object> dbMap = DBUtils.getRowMap(query);
+        System.out.println("dbMap = " + dbMap);
 
-        DBUtils.createConnection();
+        //assert/validate data from database Matches data from post request
+        assertThat(dbMap.get("NAME") , equalTo(postRequestMap.get("name")));
+        assertThat(dbMap.get("GENDER") , equalTo(postRequestMap.get("gender")));
+        assertThat(dbMap.get("PHONE") , equalTo(postRequestMap.get("phone")+""));
+
+        //disconnect from database
+        DBUtils.destroy();
     }
 
 }
