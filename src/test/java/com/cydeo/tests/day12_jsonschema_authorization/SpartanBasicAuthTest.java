@@ -37,4 +37,23 @@ public class SpartanBasicAuthTest extends SpartanSecureTestBase {
                 .and().log().all();
     }
 
+    /**
+     given accept type is json
+     When user sends GET request to /spartans
+     Then status code is 401
+     And content type is json
+     And "message" is "Unauthorized"
+     And log response
+     */
+
+    @Test
+    public void getAllSpartansUnAuthorizedTest() {
+        given().accept(ContentType.JSON)
+                .when().get("/spartans")
+                .then().statusCode(401)
+                .and().contentType(ContentType.JSON)
+                .and().body("message", equalTo("Unauthorized"))
+                .log().all();
+    }
+
 }
