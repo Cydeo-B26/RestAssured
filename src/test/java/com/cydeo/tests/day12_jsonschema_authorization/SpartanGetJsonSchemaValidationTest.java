@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.*;
 
 import com.cydeo.utils.SpartanTestBase;
 
-public class SingleSpartanJsonSchemaValidationTest extends SpartanTestBase {
+public class SpartanGetJsonSchemaValidationTest extends SpartanTestBase {
     /**
      given accept type is json
      and path param id is 15
