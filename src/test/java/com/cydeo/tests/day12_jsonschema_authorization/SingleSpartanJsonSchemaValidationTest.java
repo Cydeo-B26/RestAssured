@@ -73,11 +73,7 @@ public class SingleSpartanJsonSchemaValidationTest extends SpartanTestBase {
                 .and().body(JsonSchemaValidator.matchesJsonSchema(
                         new File("src/test/resources/jsonschemas/SearchSpartansSchema.json")
                 )).log().all();
-
     }
-
-
-
 }
 
 
