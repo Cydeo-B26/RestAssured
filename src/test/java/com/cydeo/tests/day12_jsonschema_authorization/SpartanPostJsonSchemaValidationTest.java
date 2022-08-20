@@ -1,6 +1,8 @@
 package com.cydeo.tests.day12_jsonschema_authorization;
 
+import com.cydeo.utils.SpartanRestUtils;
 import io.restassured.module.jsv.JsonSchemaValidator;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,17 +43,21 @@ public class SpartanPostJsonSchemaValidationTest extends SpartanTestBase {
         newSpartan.put("name","TestPost1");
         newSpartan.put("phone",1234567425L);
 
-        given().accept(ContentType.JSON)
+        int newSpartanID = given().accept(ContentType.JSON)
                 .and().contentType(ContentType.JSON)
                 .and().body(newSpartan)
                 .when().post("/spartans")
                 .then().assertThat().statusCode(201)
                 .and().body(JsonSchemaValidator.matchesJsonSchema(
                         new File("src/test/resources/jsonschemas/SpartanPostSchema.json")
-                )).log().all();
+                )).log().all()
+                 .and().extract().jsonPath().getInt("data.id"); //will return id integer value 
+                //.and().extract().response(); //will return Response object
+                //.and().extract().jsonPath(); //will return JsonPath object
 
-
-
+        System.out.println("newSpartanID = " + newSpartanID);
+        SpartanRestUtils.deleteSpartanById(newSpartanID);
+        
     }
 
 }
