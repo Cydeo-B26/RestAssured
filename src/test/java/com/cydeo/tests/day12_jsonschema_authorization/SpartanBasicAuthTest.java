@@ -29,7 +29,12 @@ public class SpartanBasicAuthTest extends SpartanSecureTestBase {
     @DisplayName("GET /spartans with basic auth")
     @Test
     public void getSpartansWithAuthTest() {
-
+        given().accept(ContentType.JSON)
+                .and().auth().basic("admin", "admin")
+                .when().get("/spartans")
+                .then().assertThat().statusCode(200)
+                .and().contentType(ContentType.JSON)
+                .and().log().all();
     }
 
 }
