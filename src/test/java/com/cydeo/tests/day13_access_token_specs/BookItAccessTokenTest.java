@@ -34,3 +34,12 @@ public class BookItAccessTokenTest {
         Assertions.assertTrue(accessToken != null && !accessToken.isEmpty());
     }
 }
+
+//urls and credentials goto configuration.properties
+//Test base for BookItAPITestBase
+//  -> assign baseUrl
+//  -> generateToken method
+//  -> call that method in test base
+
+
+
