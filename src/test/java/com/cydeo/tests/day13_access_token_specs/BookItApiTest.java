@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 import org.junit.jupiter.api.DisplayName;
 import io.restassured.response.Response;
+
+import java.util.Map;
+
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -64,5 +67,53 @@ public class BookItApiTest extends BookItAPITestBase {
                 .and().body("location", equalTo("IL"))
                 .and().body("clusters[0].rooms.name", hasItems("google" , "apple", "microsoft", "tesla"));
     }
+
+
+    @Test
+    public void roomInfoTest() {
+        /**
+         * Given accept type is Json
+         * And header Authorization is access token of team member
+         * And path param "room_name" is "mit"
+         * When I send GET request to "/api/rooms/{room_name}
+         * Then status code is 200
+         * And content type is json
+         body matches data:
+         {
+         "id": 111,
+         "name": "mit",
+         "description": "mens et manus",
+         "capacity": 6,
+         "withTV": true,
+         "withWhiteBoard": true
+         }
+         */
+
+        String accessToken = getAccessToken(ConfigurationReader.getProperty("team_member_email") ,
+                ConfigurationReader.getProperty("team_member_password") );
+
+        System.out.println("accessToken = " + accessToken);
+
+        Map<String, ?> roomInfoMap = given().accept(ContentType.JSON)
+                .and().pathParam("room_name", "mit")
+                .and().header("Authorization", accessToken)
+                .when().get("/api/rooms/{room_name}")
+                .then().assertThat().statusCode(200)
+                .and().contentType(ContentType.JSON)
+               .and().extract().body().as(Map.class);
+
+        System.out.println("roomInfoMap = " + roomInfoMap);
+        assertThat(roomInfoMap.get("id") , is(111));
+        assertThat(roomInfoMap.get("name") , is("mit"));
+        assertThat(roomInfoMap.get("description") , is("mens et manus"));
+
+        assertThat(roomInfoMap.get("capacity") , is(6));
+        assertThat(roomInfoMap.get("withTV") , is(true));
+        assertThat(roomInfoMap.get("withWhiteBoard") , is(true));
+
+    }
+
+
+
 
 }
