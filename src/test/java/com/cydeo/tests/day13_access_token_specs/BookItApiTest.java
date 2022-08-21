@@ -36,4 +36,32 @@ public class BookItApiTest extends BookItAPITestBase {
         assertThat(response.contentType(), is("application/json"));
         assertThat(response.path("location"), hasItems("VA", "IL"));
     }
+    
+    @Test
+    public void ilCampusTest() {
+        /**
+         * Given accept type is Json
+         * And header Authorization is access token of team leader
+         * And path param "campus_location" is "IL"
+         * When I send GET request to "/api/campuses/{campus_location}
+         * Then status code is 200
+         * And content type is json
+         * And location is "IL"
+         * And rooms names has items "google" , "apple", "microsoft", "tesla"
+         */
+        
+        String accessToken = getAccessToken(ConfigurationReader.getProperty("team_leader_email") ,
+                ConfigurationReader.getProperty("team_leader_password") );
+
+        System.out.println("accessToken = " + accessToken);
+
+        given().accept(ContentType.JSON)
+                .and().header("Authorization", accessToken)
+                .and().pathParam("campus_location", "IL")
+                .when().get("/api/campuses/{campus_location}")
+                .then().assertThat().statusCode(200);
+               
+
+    }
+
 }
