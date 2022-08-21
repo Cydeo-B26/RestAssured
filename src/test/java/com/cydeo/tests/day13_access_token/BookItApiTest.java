@@ -1,12 +1,11 @@
-package com.cydeo.tests.day13_access_token_specs;
+package com.cydeo.tests.day13_access_token;
 
 import com.cydeo.utils.BookItAPITestBase;
 import com.cydeo.utils.ConfigurationReader;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
-import org.junit.jupiter.api.DisplayName;
+
 import io.restassured.response.Response;
 
 import java.util.Map;

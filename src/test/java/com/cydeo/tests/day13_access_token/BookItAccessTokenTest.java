@@ -1,4 +1,4 @@
-package com.cydeo.tests.day13_access_token_specs;
+package com.cydeo.tests.day13_access_token;
 
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Assertions;
