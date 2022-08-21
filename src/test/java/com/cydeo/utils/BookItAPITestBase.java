@@ -3,6 +3,8 @@ package com.cydeo.utils;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeAll;
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public abstract class BookItAPITestBase {
 
@@ -18,6 +20,8 @@ public abstract class BookItAPITestBase {
                 .when().get("/sign")
                 .then().assertThat().statusCode(200)
                 .and().extract().path("accessToken");
+
+        assertThat("accessToken is empty or null",accessToken, not(emptyOrNullString()));
 
        return "Bearer " + accessToken;
     }
