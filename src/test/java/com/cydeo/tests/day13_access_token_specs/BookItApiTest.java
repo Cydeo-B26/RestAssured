@@ -59,9 +59,10 @@ public class BookItApiTest extends BookItAPITestBase {
                 .and().header("Authorization", accessToken)
                 .and().pathParam("campus_location", "IL")
                 .when().get("/api/campuses/{campus_location}")
-                .then().assertThat().statusCode(200);
-               
-
+                .then().assertThat().statusCode(200)
+                .and().contentType(ContentType.JSON)
+                .and().body("location", equalTo("IL"))
+                .and().body("clusters[0].rooms.name", hasItems("google" , "apple", "microsoft", "tesla"));
     }
 
 }
