@@ -16,7 +16,7 @@ public class BookItAccessTokenTest {
     Then status code is 200
     And accessToken should be present and not empty
      */
-
+    @DisplayName("GET /sign - request authorization api/server/service")
     @Test
     public void bookItLoginTest() {
         Response response = given().accept(ContentType.JSON)
@@ -28,9 +28,9 @@ public class BookItAccessTokenTest {
         System.out.println("status code = " + response.statusCode());
         Assertions.assertEquals(200, response.statusCode());
 
-
-
+        String accessToken = response.path("accessToken");
+        System.out.println("accessToken = " + accessToken);
+        //assert accessToken is not empty
+        Assertions.assertTrue(accessToken != null && !accessToken.isEmpty());
     }
-
-
 }
