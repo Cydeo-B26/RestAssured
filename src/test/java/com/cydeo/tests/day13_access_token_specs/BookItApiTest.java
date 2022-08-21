@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 import org.junit.jupiter.api.DisplayName;
 import io.restassured.response.Response;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public class BookItApiTest extends BookItAPITestBase {
     /**
@@ -30,6 +32,8 @@ public class BookItApiTest extends BookItAPITestBase {
                 .when().get("/api/campuses");
 
         response.prettyPrint();
-                
+        assertThat(response.statusCode(), is(200));
+        assertThat(response.contentType(), is("application/json"));
+        assertThat(response.path("location"), hasItems("VA", "IL"));
     }
 }
