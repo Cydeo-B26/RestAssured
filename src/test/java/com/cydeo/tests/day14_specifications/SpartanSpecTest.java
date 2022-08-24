@@ -43,6 +43,7 @@ public class SpartanSpecTest extends SpartanSecureTestBase {
             .and().pathParam("id",15)
             .when().get("/spartans/{id}")
             .then().spec(responseSpec)
+             .and().body("name", equalTo("Meta"))
                     .log().all();
     }
 
