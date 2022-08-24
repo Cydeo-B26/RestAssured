@@ -1,5 +1,6 @@
 package com.cydeo.utils;
 
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -27,7 +28,7 @@ public abstract class BookItAPITestBase {
 
         responseSpec = expect().statusCode(200)
                 .and().contentType(ContentType.JSON)
-                .log().all();
+                .logDetail(LogDetail.ALL);
 
     }
 
