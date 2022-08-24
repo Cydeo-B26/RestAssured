@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import static io.restassured.RestAssured.given;
 
 public abstract class SpartanSecureTestBase {
-
+    //visible to child classes. also visible to same package
     protected static RequestSpecification requestSpec;
 
     @BeforeAll //@BeforeClass in junit 4

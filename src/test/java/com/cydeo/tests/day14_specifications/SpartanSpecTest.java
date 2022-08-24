@@ -4,6 +4,7 @@ import com.cydeo.utils.SpartanSecureTestBase;
 import com.cydeo.utils.ConfigurationReader;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 
@@ -20,6 +21,9 @@ public class SpartanSpecTest extends SpartanSecureTestBase {
     RequestSpecification requestSpec = given().accept(ContentType.JSON)
             .and().auth().basic("admin","admin");
 
+    ResponseSpecification responseSpec = expect().statusCode(200).
+            and().contentType(ContentType.JSON);
+
     @Test
     public void allSpartansTest() {
 
@@ -28,7 +32,8 @@ public class SpartanSpecTest extends SpartanSecureTestBase {
 
             given().spec(requestSpec)
             .when().get("/spartans")
-           .then().log().all();
+           .then().spec(responseSpec)
+                    .log().all();
     }
 
     @Test
@@ -37,7 +42,8 @@ public class SpartanSpecTest extends SpartanSecureTestBase {
             given().spec(requestSpec)
             .and().pathParam("id",15)
             .when().get("/spartans/{id}")
-            .then().log().all();
+            .then().spec(responseSpec)
+                    .log().all();
     }
 
 }
