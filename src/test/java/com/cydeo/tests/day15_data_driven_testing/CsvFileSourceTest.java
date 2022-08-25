@@ -33,7 +33,10 @@ public class CsvFileSourceTest {
         given().accept(ContentType.JSON)
                 .and().pathParams(paramsMap)
                 .when().get("/us/{state}/{city}")
-                .then().assertThat().statusCode(200);
+                .then().assertThat().statusCode(200)
+                .and().contentType(ContentType.JSON)
+                .and().body("places", hasSize(zipCodeCount))
+                .log().all();
     }
 
 }
