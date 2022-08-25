@@ -19,7 +19,7 @@ public class JUnit5ValueSourceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Vugar", "Shina", "Dzerassa", "Eda", "Kevin","","Nadir"} )
+    @ValueSource(strings = {"Vugar", "Shina", "Dzerassa", "Eda", "Kevin","Nadir"} )
     public void testNames(String name) {
         System.out.println("Hi! "+ name);
         assertThat(name, not(blankOrNullString()));
@@ -33,12 +33,13 @@ public class JUnit5ValueSourceTest {
     @ParameterizedTest
     @ValueSource(ints = {22102, 22031, 22034, 11209, 15090, 15237,12345,20879,21224,33433})
     public void zipCodeTest(int zipCode) {
-
+        //each time new zipcode value from ValueSource is assigned to zipCode variable
         given().accept(ContentType.JSON)
-                .and().pathParam("postal-code", zipCode)
+                .and().pathParam("postal-code", zipCode) //using zipCode as path parameter
                 .when().get("/us/{postal-code}")
                 .then().assertThat().statusCode(200)
                 .log().all();
+
     }
 
 
