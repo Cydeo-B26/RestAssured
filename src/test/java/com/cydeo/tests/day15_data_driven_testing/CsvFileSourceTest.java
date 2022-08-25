@@ -23,9 +23,17 @@ public class CsvFileSourceTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource
+    @CsvFileSource(resources = "/ZipCodes.csv", numLinesToSkip = 1)
     public void zipCodeTest(String state, String city, int zipCodeCount) {
 
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("state", state);
+        paramsMap.put("city", city);
+
+        given().accept(ContentType.JSON)
+                .and().pathParams(paramsMap)
+                .when().get("/us/{state}/{city}")
+                .then().assertThat().statusCode(200);
     }
 
 }
