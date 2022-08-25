@@ -43,7 +43,8 @@ public class CsvSourceDDTTest {
                 "East Pittsburgh, PA",
                 "Raleigh, NC",
                 "San Diego, CA",
-                "Baltimore, MD"})
+                "Baltimore, MD",
+                "Fairfax, VA"})
     public void cityAndStateZipCodeAPITest(String city, String state) {
 
         Map<String, String> paramsMap = new HashMap<>();
