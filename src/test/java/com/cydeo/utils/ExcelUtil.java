@@ -10,7 +10,7 @@ import java.util.Map;
 
 /*
  * This is a utility for reading from writing to excel files.
- * it works with xls and xlsx files.
+ * it works with xls and xlsx files. XSSF -> xlsx, HSSF -> xls
  */
 public class ExcelUtil {
 
