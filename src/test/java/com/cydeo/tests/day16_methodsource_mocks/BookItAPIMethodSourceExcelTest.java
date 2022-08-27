@@ -4,6 +4,7 @@ import com.cydeo.utils.BookItAPITestBase;
 import com.cydeo.utils.ExcelUtil;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -37,6 +38,27 @@ public class BookItAPIMethodSourceExcelTest extends BookItAPITestBase {
             List<Map<String, String>> data = excelReader.getDataList();
 
             return data;
+    }
+
+    @DisplayName("GET /sign -> using a for loop")
+    @Test
+    public void loginTestUsingLoop() {
+        List<Map<String, String>> allCredentials = getUserCredentials();
+
+        for (Map<String, String> userInfo: allCredentials) {
+            System.out.println("userInfo = " + userInfo);//can be used as QueryParams in API call.
+            //API call/request to /sign and verify status code and access code is there
+            try {
+                given().accept(ContentType.JSON)
+                        .and().queryParams(userInfo)
+                        .when().get("/sign")
+                        .then().spec(responseSpec)//status code, contentType
+                        .and().body("accessToken", not(blankOrNullString()));
+            }catch (Throwable e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
     
     
