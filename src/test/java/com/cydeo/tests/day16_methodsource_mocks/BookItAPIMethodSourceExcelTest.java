@@ -2,12 +2,17 @@ package com.cydeo.tests.day16_methodsource_mocks;
 
 import com.cydeo.utils.BookItAPITestBase;
 import com.cydeo.utils.ExcelUtil;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Map;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public class BookItAPIMethodSourceExcelTest extends BookItAPITestBase {
     
@@ -16,7 +21,12 @@ public class BookItAPIMethodSourceExcelTest extends BookItAPITestBase {
     @MethodSource("getUserCredentials")
     public void bookItAuthDDTTest(Map<String, String> userInfo) {
         System.out.println("userInfo = " + userInfo);//can be used as QueryParams in API call.
-
+        //API call/request to /sign and verify status code and access code is there
+        given().accept(ContentType.JSON)
+                .and().queryParams(userInfo)
+                .when().get("/sign")
+                .then().spec(responseSpec)//status code, contentType
+                .and().body("accessToken", not(blankOrNullString()));
     }
     
     
