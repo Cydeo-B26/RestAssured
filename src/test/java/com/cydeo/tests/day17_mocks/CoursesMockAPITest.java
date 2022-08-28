@@ -14,4 +14,18 @@ public class CoursesMockAPITest {
     public static void setUp(){
         baseURI = "https://457874f4-e103-4a5f-80ea-d5af02231ed7.mock.pstmn.io";
     }
+
+    /**
+     Given accept type is json
+     When I send get request to /courses
+     Then status code is 200
+     And content type is json
+     And body courseIds contain 1,2,3
+     And courseNames are "Java SDET", "Java Developer", "Cyber Security Analyst"
+     */
+    @Test
+    public void coursesMockTest() {
+
+    }
+
 }
