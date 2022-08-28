@@ -23,9 +23,16 @@ public class CoursesMockAPITest {
      And body courseIds contain 1,2,3
      And courseNames are "Java SDET", "Java Developer", "Cyber Security Analyst"
      */
+    @DisplayName("GET /courses mock api")
     @Test
     public void coursesMockTest() {
-
+        given().accept(ContentType.JSON)
+                .when().get("/courses")
+                .then().assertThat().statusCode(200)
+                .and().contentType(ContentType.JSON)
+                .and().body("courseId", hasItems(1,2,3),
+                        "courseName", hasItems("Java SDET", "Java Developer", "Cyber Security Analyst"))
+                .log().all();
     }
 
 }
